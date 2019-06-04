@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="../style/style.css" type="text/css" >
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Mukta|Noto+Sans" rel="stylesheet">
+
+    <script type="text/javascript" src="../3DModell/firmenhaus/lib/big.min.js"></script>
+    <script type="text/javascript" src="../3DModell/firmenhaus/lib/gl-matrix-min.js"></script>
+    <script type="text/javascript" src="../3DModell/firmenhaus/lib/jszip.min.js"></script>
+    <script type="text/javascript" src="../3DModell/firmenhaus/lib/core.min.js"></script>
+    <script type="text/javascript" src="../3DModell/firmenhaus/lib/geom.min.js"></script>
+    <script type="text/javascript" src="../3DModell/firmenhaus/lib/stroke.min.js"></script>
+    <script type="text/javascript" src="../3DModell/firmenhaus/lib/batik-svgpathparser.min.js"></script>
+    <script type="text/javascript" src="../3DModell/firmenhaus/lib/jsXmlSaxParser.min.js"></script>
+    <script type="text/javascript" src="../3DModell/firmenhaus/lib/triangulator.min.js"></script>
+    <script type="text/javascript" src="../3DModell/firmenhaus/lib/viewmodel.min.js"></script>
+    <script type="text/javascript" src="../3DModell/firmenhaus/lib/viewhome.min.js"></script>
+
+    <script>
+        if (checkBrowser() == "Chrome")
+        {
+            alert("Möglicherweise lässt Chrome die Simulation nicht zu, sollte dies der Fall sein, verwenden Sie bitte Firefox oder Edge");
+        }
+        function checkBrowser(){
+            c = navigator.userAgent.search("Chrome");
+
+            if (c > -1) {
+                browser = "Chrome";
+            }
+        return browser;
+        }
+    </script>
+
+    <style>
+
+        html, body{
+            height: 100%;
+        }
+
+        #inhalt
+        {
+            height: 100%;
+        }
+        #simulation
+        {
+            border: none;
+            padding: 20px;
+            background: linear-gradient(0deg, rgba(46,46,46,0), rgba(46,46,46,0)), url('../images/firmaAussen.JPG') no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50%;
+        }
+
+        #simulation:hover
+        {
+            background: linear-gradient(0deg, rgba(46,46,46,0.7), rgba(46,46,46,0.7)), url('../images/firmaAussen.JPG') no-repeat;
+            background-size: cover;
+        }
+
+        #tryIt {
+            background-color: white; /* Green */
+            border: none;
+            color: #2E2E2E;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+        }
+
+        #tryIt:hover
+        {
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div id = "inhalt">
+        <div id = "headerBild"><!-- particles.js container -->
+            <div id="particles-js" style="background-image: url('../images/logoWeiß.png');background-size: contain; background-position-x: 15%"></div> <!-- stats - count particles -->
+            <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" style="z-index: -39"></script> <!-- stats.js lib -->
+        </div>
+
+        <div class="btn-group">
+            <a href = "../index.html"><button class="button">Home</button></a>
+            <a href = "shop.html"><button class="button">Shop</button></a>
+            <a href = ""><button class="button">Simulation</button></a>
+            <a href = "impressum.html"><button class="button">Impressum</button></a>
+        </div>
+
+        <h1>Simulation</h1>
+        <p>
+            Nehmen Sie einen kleinen Einblick in die großartige 3D Welt. <br>
+            Begutachten Sie als Ausschnitt des 3DNets unser Firmengebäude...
+        </p>
+
+        <div id = "simulation" onmouseover="changeButtonColor(1)" onmouseout="changeButtonColor(2)">
+            <button id ="tryIt" onclick='viewHomeInOverlay("../3DModell/firmenhaus/firma.zip",
+              {roundsPerMinute:    1,                        /* Rotation speed of the animation launched once home is loaded in rounds per minute, no animation if missing */
+               widthByHeightRatio: 4/3,                      /* Size ratio of the displayed canvas */
+               navigationPanel: "none",                      /* Displayed navigation arrows, "none" or "default" for default one or an HTML string containing elements with data-simulated-key
+                                                                attribute set "UP", "DOWN", "LEFT", "RIGHT"... to replace the default navigation panel, "none" if missing */
+               aerialViewButtonText: "Aerial view",          /* Text displayed for aerial view radio button, no radio buttons if missing */
+               virtualVisitButtonText: "Virtual visit",      /* Text displayed for virtual visit radio button, no radio buttons if missing */
+               /*selectableLevels: ["Level 0", "Level 1"], */  /* Uncomment to choose the list of displayed levels, no select component if empty array */
+               viewerControlsAdditionalHTML: "",             /* Additional HTML text appended to controls displayed below the canvas 3D, by default empty */
+               readingHomeText: "Reading",                   /* Comment displayed while reading home */
+               readingModelText: "Model",                    /* Comment displayed while reading models */
+               noWebGLSupportError: "No WebGL support"       /* Error message displayed if the browser do not support WebGL */
+              })'>Try it</button>
+        </div>
+    </div>
+
+    <script src="../js/backgroundHeader.js"></script>
+    <script>
+
+        function changeButtonColor(value) {
+            let button = document.getElementById('tryIt');
+
+            if(value === 1)
+            {
+                button.style = ' background-color: #151515;\n' +
+                    '            border: none;\n' +
+                    '            color: white;\n' +
+                    '            padding: 15px 32px;\n' +
+                    '            text-align: center;\n' +
+                    '            text-decoration: none;\n' +
+                    '            display: inline-block;'
+            }
+            else if(value === 2)
+            {
+                button.style = ' background-color: white; /* Green */\n' +
+                    '            border: none;\n' +
+                    '            color: #2E2E2E;\n' +
+                    '            padding: 15px 32px;\n' +
+                    '            text-align: center;\n' +
+                    '            text-decoration: none;\n' +
+                    '            display: inline-block;\n' +
+                    '            font-size: 20px;'
+            }
+        }
+    </script>
+
+</body>
+</html>
